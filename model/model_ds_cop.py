@@ -113,7 +113,7 @@ class DynamicPrototypePooler_Decoupled(nn.Module):
 
         return Z_pooled, self.last_A_softmax
 
-class DualPath_Hybrid_v3_Decoupled(nn.Module):
+class DualPath_Model(nn.Module):
     """
     Main model
     """
@@ -253,7 +253,7 @@ class Baseline_SpatialEncoder(nn.Module):
         Z_nodes = Z_cnn.view(B_T, D, -1).permute(0, 2, 1)
         return Z_nodes  # (B*T, 1024, 128)
 
-class Baseline_PlainCNN_6DOF(nn.Module):
+class Baseline_PlainCNN(nn.Module):
     def __init__(self, coord_map, out_dim=6, dropout=0.3):
         super().__init__()
 
@@ -303,7 +303,7 @@ class Baseline_PlainCNN_6DOF(nn.Module):
         output = self.head(Z_context_B)  # (B*T, 6)
         return output.view(B, T, -1), None  # (B, T, 6)
 
-class Baseline_CNN_LSTM_6DOF(nn.Module):
+class Baseline_CNN_LSTM(nn.Module):
     def __init__(self, coord_map, out_dim=6, global_lstm_hidden=256,
                  lstm_layers=2, bidirectional=True, dropout=0.3):
         super().__init__()
@@ -364,7 +364,7 @@ class Baseline_CNN_LSTM_6DOF(nn.Module):
         output = self.head_B(lstm_out_B)  # (B, T, 6)
         return output, None
 
-class DualPath_Hybrid_v3_PathBOnly(nn.Module):
+class DualPath_PathB(nn.Module):
     """
     Path-B-Only Baseline
     - Shared (CNN + coord + CoP)
